@@ -3,7 +3,7 @@ import type { Request, Response, NextFunction } from "express";
 // import router from "./router";
 import morgan from "morgan";
 
-import { createNewUser, signIn } from "./handlers/user";
+// import { createNewUser, signIn } from "./handlers/user";
 
 const app = express();
 
@@ -45,9 +45,9 @@ app.get("/", (req, res, next) => {
 
 // app.use("/api", [protect], router);
 
-app.post("/user", createNewUser);
+/* app.post("/user", createNewUser);
 app.post("/signin", signIn);
-
+ */
 // THIS TIME ERROR IS BING PASSED TO next one
 /* app.get("/hello-world", async (req, res, next) => {
   next(new Error("Hello World Error!"));
