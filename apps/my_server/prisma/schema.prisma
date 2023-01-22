@@ -1,0 +1,89 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UPDATE_STATUS {
+  IN_PROGRESS
+  LIVE
+  DEPRECATED
+  ARCHIVED
+}
+
+model User {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  username  String   @unique
+  password  String
+
+  products Product[]
+
+  posts Post[]
+}
+
+model Product {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  name      String   @db.VarChar(255)
+
+  belongsTo   User   @relation(fields: [belongsToId], references: [id])
+  belongsToId String
+
+  updates Update[]
+
+  @@unique([id, belongsToId])
+}
+
+model Update {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  title   String        @db.VarChar(255)
+  body    String
+  status  UPDATE_STATUS @default(IN_PROGRESS)
+  version String?
+  asset   String?
+
+  updatePoints UpdatePoint[]
+
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+
+  @@unique([id, productId])
+}
+
+model UpdatePoint {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name        String @db.VarChar(255)
+  description String
+
+  update   Update @relation(fields: [updateId], references: [id])
+  updateId String
+
+  @@unique([id, updateId])
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  title String @db.VarChar(255)
+
+  content   String?
+  published Boolean @default(false)
+
+  author   User   @relation(fields: [authorId], references: [id])
+  authorId String
+}
