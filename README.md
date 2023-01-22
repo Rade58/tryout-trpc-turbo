@@ -2,7 +2,7 @@
 
 [tRPC docs](https://trpc.io/docs/)
 
-# Starter is here
+# Starter
 
 `starter` branch
 
@@ -18,6 +18,12 @@ server:
 
 ```
 npm i @trpc/server zod --workspace="my_server"
+```
+
+client:
+
+```
+npm i @trpc/client @trpc/server @trpc/react-query @tanstack/react-query --workspace="my_client"
 ```
 
 # Enable strict mode for typescript (server)
