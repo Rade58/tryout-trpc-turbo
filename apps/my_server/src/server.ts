@@ -21,7 +21,7 @@ app.use((req, res, next) => {
 // ---------------------------------------
 // ---------------------------------------
 app.use(
-  "trpc",
+  "/trpc",
   expressTrpc.createExpressMiddleware({
     router: appRouter,
     createContext,
