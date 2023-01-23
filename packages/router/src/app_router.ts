@@ -14,6 +14,8 @@ export const createContext = async ({
   req,
   res,
 }: trpcExpress.CreateExpressContextOptions) => {
+  console.log("inside context");
+
   // here we woud run prisma query for example
   // in order to get user for authentication
   // THIS FUNCTION WILL "SIMULATE", GETTING THE USER
@@ -28,6 +30,7 @@ export const createContext = async ({
 
   const user = await getUser();
 
+  // RETURNING USER BACK AS A PART OF THE CONTEXT
   return {
     req,
     res,

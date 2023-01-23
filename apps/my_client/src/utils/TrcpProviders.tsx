@@ -9,7 +9,7 @@ const TrpcProviders: FC<{ children: ReactNode }> = ({ children }) => {
     return trpc.createClient({
       links: [
         httpBatchLink({
-          url: "http://localhost:2021/trpc",
+          url: "http://localhost:3061/trpc",
           // optional
           // headers() {
           // return {
