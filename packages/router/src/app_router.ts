@@ -34,7 +34,8 @@ type Context = inferAsyncReturnType<typeof createContext>;
 
 const t = initTRPC.context<Context>().create();
 
-// DEFINING router and public procedure
+// DEFINING OBJECTS
+// THAT WILL BE USED FOR router and procedure CREATIONS
 const router = t.router;
 // PROCEDURE IS VERY FLEXIBILE PRIMITIVE TO CREATE BACKEND FUNCTIONS (THEY ARE REUSABLE)
 // WE NEED TO LEARN MORA ABOUT PROCEDURES
@@ -42,9 +43,10 @@ const router = t.router;
 // BECAUSE THERE ARE TWO TYPES OF PROCEDURES
 // PublicProcedure and Prtected Procedure
 
-// THIS PROCEDURE WE WILL BE USES AS PUBLIC
+// THIS OBJECT WE WILL BE USING TO CREATE PROCEDURES
 // PUBLIC PROCEDUR CAN BE VIEWED AS THE EQUIVALENT
 // OF REST ENDPOINT
+
 const publicProcedure = t.procedure;
 //
 
@@ -81,7 +83,45 @@ function createMessage(text: string) {
   return msg;
 }
 
-// WE HAVE TWO ROUTES FOR TWO TYPES OF RECORDS WE HAVE IN OUR DATBASE
+// WE HAVE TWO ROUTERS FOR TWO TYPES OF RECORDS WE HAVE IN OUR DATBASE
 // ONE ROUTER FOR THE   Post     AND ONE ROUTER FOR THE    Message
+// AND WE WILL CREATE PROCEDURES FOR THAAT ROUTERS
+
+const messageRouter = router({
+  // this is the public procedure with
+  // input validation
+  addMessage: publicProcedure.input(z.string()).mutation(({ input, ctx }) => {
+    // JUST TO SHOW YOU WE HAVE ctx HERE AND IT IS POSSIBLE
+    // TO ACCESS user SINCE WE DEFINE HANDLER FOR CONTEXT IN  TERMS
+    // THAT IT CAN  user CAN BE INSERTED INSIDE
+    const { user } = ctx;
+
+    console.log({ user });
+
+    const msg = createMessage(input);
+
+    db.messages.push(msg);
+
+    return msg;
+  }),
+  // this is a public procedure without any input validation
+  listMessages: publicProcedure.query(() => db.messages),
+});
+
+// NO IDEA WHY IS HERE
+const postRouter = router({
+  // agin we have input validation
+  createPost: t.procedure
+    .input(z.object({ title: z.string() }))
+    .mutation(({ input }) => {
+      const post = {
+        id: ++id,
+        ...input,
+      };
+
+      db.posts.push(post);
+    }),
+  listPosts: publicProcedure.query(() => db.posts),
+});
 
 export {};
