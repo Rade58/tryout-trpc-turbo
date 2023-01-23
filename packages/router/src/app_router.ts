@@ -128,7 +128,7 @@ const postRouter = router({
 // ---------------------------------------------------------------
 //           -------------- root router -----------------
 
-const appRouter = router({
+export const appRouter = router({
   // WE MERGE PREVIOUSLLY CREATED ROUTER
   post: postRouter,
   message: messageRouter,
@@ -158,4 +158,5 @@ const appRouter = router({
   }),
 });
 
-export {};
+//
+export type AppRouter = typeof appRouter;
