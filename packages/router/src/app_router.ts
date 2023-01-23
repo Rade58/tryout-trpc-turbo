@@ -16,7 +16,7 @@ const createContext = async ({
     if (req.headers.authorization !== "Bearer abc1245699-sdfdsffd") {
       return null;
     } else {
-      return "Shibatoshi";
+      return { name: "Shibatoshi" };
     }
   }
 
@@ -127,5 +127,19 @@ const postRouter = router({
 // ---------------------------------------------------------------
 // ---------------------------------------------------------------
 //           -------------- root router -----------------
+
+const appRouter = router({
+  // WE MERGE PREVIOUSLLY CREATED ROUTER
+  post: postRouter,
+  message: messageRouter,
+  // SINCE WE ARE DEFINING ROUTER
+  // WE CAN DEFINE INDIVIDUAL PROCEDURES,
+  hello: publicProcedure.input(z.string().nullish()).query(({ ctx, input }) => {
+    return `hello ${input ?? ctx.user?.name ?? "world"}`;
+  }),
+  // OR WE CAN INLINE ENTIRE ROUTER
+  // AS YOU CAN SEE THIS ROUTER HAS A PROCEDURE
+  // WHERE WE CHECK IS THERE A USER IN CONTEXT
+});
 
 export {};
