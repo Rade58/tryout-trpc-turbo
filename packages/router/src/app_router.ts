@@ -3,8 +3,14 @@ import { TRPCError, inferAsyncReturnType, initTRPC } from "@trpc/server";
 import * as trpcExpress from "@trpc/server/adapters/express";
 import { z } from "zod";
 
+// DOING THIS ONLY BECAUSE I DON'T WANT TO INSTALL
+// trcp/server INSIDE MY EXPRESS APPLICATION
+export const expressTrpc = trpcExpress;
+
 // similar concept of context like with graphql
-const createContext = async ({
+// WE WILL EXPORT THIS BECAUSE WE ARE GOING TO USE THIS
+// WITH EXPRESS APP
+export const createContext = async ({
   req,
   res,
 }: trpcExpress.CreateExpressContextOptions) => {
