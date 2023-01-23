@@ -140,6 +140,22 @@ const appRouter = router({
   // OR WE CAN INLINE ENTIRE ROUTER
   // AS YOU CAN SEE THIS ROUTER HAS A PROCEDURE
   // WHERE WE CHECK IS THERE A USER IN CONTEXT
+  admin: router({
+    secret: publicProcedure.query(({ ctx }) => {
+      // AUTHENTICATION
+      if (!ctx.user) {
+        throw new TRPCError({ code: "UNAUTHORIZED" });
+      }
+      // AUTHORIZATION
+      if (ctx.user.name !== "Satoshi Nakamoto") {
+        throw new TRPCError({ code: "FORBIDDEN" });
+      }
+
+      return {
+        secret: "Buy crypto",
+      };
+    }),
+  }),
 });
 
 export {};
