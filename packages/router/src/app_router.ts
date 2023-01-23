@@ -34,8 +34,17 @@ type Context = inferAsyncReturnType<typeof createContext>;
 
 const t = initTRPC.context<Context>().create();
 
-// router and public procedure
+// DEFINING router and public procedure
 const router = t.router;
+// PROCEDURE IS VERY FLEXIBILE PRIMITIVE TO CREATE BACKEND FUNCTIONS (THEY ARE REUSABLE)
+// WE NEED TO LEARN MORA ABOUT PROCEDURES
+// WE NEED TO LEARN IN FUTURE HOW TO DEFINE PROTECTED PROCEDURE
+// BECAUSE THERE ARE TWO TYPES OF PROCEDURES
+// PublicProcedure and Prtected Procedure
+
+// THIS PROCEDURE WE WILL BE USES AS PUBLIC
+// PUBLIC PROCEDUR CAN BE VIEWED AS THE EQUIVALENT
+// OF REST ENDPOINT
 const publicProcedure = t.procedure;
 //
 
@@ -72,6 +81,7 @@ function createMessage(text: string) {
   return msg;
 }
 
-// WE HAVE TWO ROUTES
+// WE HAVE TWO ROUTES FOR TWO TYPES OF RECORDS WE HAVE IN OUR DATBASE
+// ONE ROUTER FOR THE   Post     AND ONE ROUTER FOR THE    Message
 
 export {};
