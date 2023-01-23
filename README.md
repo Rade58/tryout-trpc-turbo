@@ -4,9 +4,11 @@
 
 [express server](https://github.com/trpc/trpc/blob/main/examples/express-server/src/server.ts)
 
-# Idea is to put router in the package
+# Idea is to put router (and other utilities) in the package
 
-- Actual router will be imported and used by the express app
+AND THEN WE CAN
 
-- But typescript type of the router will be used by the client apps(other express app, react application )
+- import module (primarly the router we build) and use it with our express app
+
+- also we can import parts of same module in our client apps (other express app for example, andour react application), so clint can interact with api 
 
