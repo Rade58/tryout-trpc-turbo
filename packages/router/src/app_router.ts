@@ -21,7 +21,7 @@ export const createContext = async ({
   // THIS FUNCTION WILL "SIMULATE", GETTING THE USER
   // FROM THE DATABASE
   async function getUser() {
-    if (req.headers.authorization !== "Bearer abc1245699-sdfdsffd") {
+    if (req.headers.authorization !== "Bearer secretshiba") {
       return null;
     } else {
       return { name: "Shibatoshi" };
